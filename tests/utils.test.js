@@ -67,13 +67,31 @@ it("Should create a new (object) Item with name and price", function() {
   expect(item).to.have.property("quantity", 1)
 })
 
-it("Should return an array containing all items in cart")
+it("Should return an array containing all items in cart", function() { 
+  const cart = utils.getShoppingCart()
+  expect(cart).to.be.an("array")
+})
 
-it("Should add a new item to the shopping cart")
+it("Should add a new item to the shopping cart", function() {
+  const item = { name: "tomato", price: 1.99, quantity: 1}
+  utils.addItemToCart(item)
+  const shoppingCart = utils.getShoppingCart()
+  expect(shoppingCart).to.include(item)
+})
 
-it("Should return the number of items in the cart")
+it("Should return the number of items in the cart", function() {
+  const numItems = utils.getNumItemsInCart()
+  expect(numItems).to.be.a("number")
+})
 
-it("Should remove items from cart")
+it("Should remove items from cart", function() {
+  const removedItem = { name: "tomato", price: 1.99, quantity: 1}
+  utils.addItemToCart(removedItem)
+  utils.removeItemFromCart(removedItem)
+  const updatedCart = utils.getShoppingCart()
+  expect(updatedCart).to.not.include(removedItem)
+  expect(removedItem).to.have.property("quantity", 1)
+})
 
 // ========================================================
 // Stretch Challenges

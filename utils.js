@@ -50,19 +50,48 @@ const createItem = (name, price) => {
 
 const getShoppingCart = () => {
   // should return the current state of shopping cart
+  return shoppingCart
 }
 
 const addItemToCart = (item) => {
-  // should add item to shopping cart
+  const index = shoppingCart.findIndex(cartItem => {
+    return cartItem.name === item.name && cartItem.price === item.price
+  })
+  // check if item is in array, if yes, update quantity
+  if (index !== -1) {
+    shoppingCart[index].quantity++
+  } else {
+  // should add item to shopping cart if not there
+    shoppingCart.push(item)
+  }
 }
 
 const getNumItemsInCart = () => {
   // should return the total quantity of items in cart
+  let total = 0
+  shoppingCart.forEach(item => {
+    total += item.quantity
+  })
+  return total
 }
 
 const removeItemFromCart = (item) => {
   // should remove item from shopping cart
+  const index = shoppingCart.findIndex(cartItem => {
+    return cartItem.name === item.name && cartItem.price === item.price
+  })
+  // if the item is in the array
+  if (index !== -1) {
+    // and qty > 1, decrease the quantity
+    if (shoppingCart[index].quantity > 1) {
+      shoppingCart[index].quantity--
+    } else {
+      // if qty = 1, remove using splice!!
+      shoppingCart.splice(index, 1)
+    }
+  }
 }
+
 
 module.exports = {
   sayHello, area, perimeter, circleArea,
