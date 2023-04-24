@@ -44,8 +44,8 @@ const clearCart = () => {
   shoppingCart.length = 0
 }
 
-const createItem = (name, price) => {
-  return { name, price, quantity: 1 }
+const createItem = (name, price, quantity = 1) => {
+  return { name, price, quantity }
 }
 
 const getShoppingCart = () => {
@@ -59,7 +59,7 @@ const addItemToCart = (item) => {
   })
   // check if item is in array, if yes, update quantity
   if (index !== -1) {
-    shoppingCart[index].quantity++
+    shoppingCart[index].quantity += item.quantity
   } else {
   // should add item to shopping cart if not there
     shoppingCart.push(item)
@@ -92,9 +92,17 @@ const removeItemFromCart = (item) => {
   }
 }
 
+const getTotalCost = () => {
+  let totalCost = 0;
+  for (let item of shoppingCart) {
+    totalCost += item.price * item.quantity;
+  }
+  return Number(totalCost.toFixed(2));
+}
+
 
 module.exports = {
   sayHello, area, perimeter, circleArea,
   clearCart, createItem, getShoppingCart, addItemToCart,
-  getNumItemsInCart, removeItemFromCart
+  getNumItemsInCart, removeItemFromCart, getTotalCost
 }
